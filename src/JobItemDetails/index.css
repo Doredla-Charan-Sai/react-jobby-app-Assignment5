@@ -1,0 +1,48 @@
+.jobs-detail-cont {
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.des-visit-cont {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.website-link {
+  text-decoration: none;
+  color: rgb(159, 92, 222);
+}
+.specific-job-cont {
+  background-color: black;
+  padding: 50px;
+}
+.skills-cont {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin: 0;
+  padding: 0px;
+  list-style-type: none;
+  flex-wrap: wrap;
+}
+.skill-cont {
+  display: flex;
+  flex-direction: row;
+  width: 30%;
+  align-items: center;
+  padding: 20px;
+}
+.life-at-company-cont {
+  display: flex;
+  flex-direction: row;
+}
+.life-at-img {
+  margin-left: 20px;
+}
+.similar-jobs-head {
+  font-family: 'Roboto';
+  color: white;
+}

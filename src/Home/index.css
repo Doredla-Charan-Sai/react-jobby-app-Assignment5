@@ -1,0 +1,19 @@
+.home-bg-cont {
+  background-image: url('https://assets.ccbp.in/frontend/react-js/home-sm-bg.png');
+  height: 100vh;
+}
+.home-txt-cont {
+  padding: 50px;
+  width: 50%;
+}
+.main-home-head {
+  color: white;
+  font-size: 50px;
+  font-family: 'Roboto';
+  font-weight: bold;
+}
+.main-home-para {
+  color: white;
+  font-size: 20px;
+  font-family: 'Roboto';
+}
