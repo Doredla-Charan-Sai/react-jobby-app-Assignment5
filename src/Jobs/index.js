@@ -69,9 +69,11 @@ class Jobs extends Component {
     searchInput: '',
     jobAPIStatus: apiStatusConstants.initial,
     jobsList: [],
+    isLoading: true,
   }
 
   componentDidMount() {
+    this.setState({isLoading: false})
     this.getProfileAPICall()
     this.getJobsApiCall()
   }
@@ -275,6 +277,13 @@ class Jobs extends Component {
         <p className="oops-head opps-para">
           We could not find any jobs. Try other filters
         </p>
+        <button
+          type="button"
+          className="login-btn"
+          onClick={this.getJobsApiCall}
+        >
+          Retry
+        </button>
       </div>
     )
   }
@@ -308,91 +317,97 @@ class Jobs extends Component {
   }
 
   render() {
-    const {activeSalaryRange} = this.state
+    const {activeSalaryRange, isLoading} = this.state
     return (
       <>
-        <div className="jobs-cont">
-          <Header />
-          <div className="two-conts">
-            <div className="profile-select-cont">
-              {this.renderProfileCases()}
-              <hr className="line" />
-              <div className="check-box-cont">
-                <h1 className="check-title">Type of Employment</h1>
-                <ul className="check-list-cont">
-                  {employmentTypesList.map(checkItem => (
-                    <li
-                      className="list-checkbox"
-                      key={checkItem.employmentTypeId}
-                    >
-                      <input
-                        type="checkbox"
-                        onChange={this.onCheck}
-                        value={checkItem.employmentTypeId}
-                        id={checkItem.employmentTypeId}
-                        className="checkbox"
-                      />
-                      <label
-                        htmlFor={checkItem.employmentTypeId}
-                        className="label"
+        {isLoading ? (
+          this.renderLoader
+        ) : (
+          <div className="jobs-cont">
+            <Header />
+            <div className="two-conts">
+              <div className="profile-select-cont">
+                {this.renderProfileCases()}
+                <hr className="line" />
+                <div className="check-box-cont">
+                  <h1 className="check-title">Type of Employment</h1>
+                  <ul className="check-list-cont">
+                    {employmentTypesList.map(checkItem => (
+                      <li
+                        className="list-checkbox"
+                        key={checkItem.employmentTypeId}
                       >
-                        {checkItem.label}
-                      </label>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <hr className="line" />
-              <div className="check-box-cont">
-                <h1 className="check-title">Salary Range</h1>
-                <ul
-                  className="check-list-cont"
-                  onChange={this.onChangeRadio}
-                  value={activeSalaryRange}
-                >
-                  {salaryRangesList.map(checkItem => (
-                    <li className="list-checkbox" key={checkItem.salaryRangeId}>
-                      <input
-                        type="radio"
-                        value={checkItem.salaryRangeId}
-                        id={checkItem.salaryRangeId}
-                        name="salaries"
-                        className="checkbox"
-                      />
-                      <label
-                        htmlFor={checkItem.salaryRangeId}
-                        className="label"
+                        <input
+                          type="checkbox"
+                          onChange={this.onCheck}
+                          value={checkItem.employmentTypeId}
+                          id={checkItem.employmentTypeId}
+                          className="checkbox"
+                        />
+                        <label
+                          htmlFor={checkItem.employmentTypeId}
+                          className="label"
+                        >
+                          {checkItem.label}
+                        </label>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <hr className="line" />
+                <div className="check-box-cont">
+                  <h1 className="check-title">Salary Range</h1>
+                  <ul
+                    className="check-list-cont"
+                    onChange={this.onChangeRadio}
+                    value={activeSalaryRange}
+                  >
+                    {salaryRangesList.map(checkItem => (
+                      <li
+                        className="list-checkbox"
+                        key={checkItem.salaryRangeId}
                       >
-                        {checkItem.label}
-                      </label>
-                    </li>
-                  ))}
-                </ul>
+                        <input
+                          type="radio"
+                          value={checkItem.salaryRangeId}
+                          id={checkItem.salaryRangeId}
+                          name="salaries"
+                          className="checkbox"
+                        />
+                        <label
+                          htmlFor={checkItem.salaryRangeId}
+                          className="label"
+                        >
+                          {checkItem.label}
+                        </label>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-            </div>
-            <div className="search-jobs-list">
-              <div className="search-cont">
-                <input
-                  type="search"
-                  placeholder="Search"
-                  onChange={this.onSearch}
-                  className="search-ip"
-                />
-                <button
-                  type="button"
-                  data-testid="searchButton"
-                  label="search"
-                  className="search-btn"
-                  onClick={this.getSearchInput}
-                >
-                  <BsSearch className="search-icon" />
-                </button>
+              <div className="search-jobs-list">
+                <div className="search-cont">
+                  <input
+                    type="search"
+                    placeholder="Search"
+                    onChange={this.onSearch}
+                    className="search-ip"
+                  />
+                  <button
+                    type="button"
+                    data-testid="searchButton"
+                    label="search"
+                    className="search-btn"
+                    onClick={this.getSearchInput}
+                  >
+                    <BsSearch className="search-icon" />
+                  </button>
+                </div>
+                {this.renderCases()}
               </div>
-              {this.renderCases()}
             </div>
           </div>
-        </div>
-        ){/* } */}
+        )}
       </>
     )
   }
