@@ -136,7 +136,7 @@ class JobItemDetails extends Component {
             <img
               className="company-logo"
               src={companyLogoUrl}
-              alt="company logo"
+              alt="job details company logo"
             />
             <div className="name-rating-cont">
               <h1 className="company-name">{title}</h1>

@@ -54,12 +54,6 @@ const apiStatusConstants = {
   failure: 'FAILURE',
   inProgress: 'INPROGRESS',
 }
-const apiProfileStatusConstants = {
-  initial: 'INITIAL',
-  success: 'SUCCESS',
-  failure: 'FAILURE',
-  inProgress: 'INPROGRESS',
-}
 
 class Jobs extends Component {
   state = {
@@ -76,15 +70,20 @@ class Jobs extends Component {
     this.setState({isLoading: false})
     this.getProfileAPICall()
     this.getJobsApiCall()
+    // const {apiProfileStatus} = this.state
+    // // eslint-disable-next-line no-unused-expressions
+    // apiProfileStatus === apiStatusConstants.success
+    //   ? this.getJobsApiCall()
+    //   : null
   }
 
   getProfileAPICall = async () => {
     this.setState({
-      apiProfileStatus: apiProfileStatusConstants.inProgress,
+      jobAPIStatus: apiStatusConstants.initial,
+      apiProfileStatus: apiStatusConstants.inProgress,
       activeEmployements: [],
       activeSalaryRange: '',
       searchInput: '',
-      jobAPIStatus: apiStatusConstants.initial,
     })
     const profileUrl = 'https://apis.ccbp.in/profile'
     const options = {
@@ -103,10 +102,10 @@ class Jobs extends Component {
       }
       this.setState({
         userProfile: updatedProfileData,
-        apiProfileStatus: apiProfileStatusConstants.success,
+        apiProfileStatus: apiStatusConstants.success,
       })
     } else {
-      this.setState({apiProfileStatus: apiProfileStatusConstants.failure})
+      this.setState({apiProfileStatus: apiStatusConstants.failure})
     }
   }
 
@@ -141,18 +140,6 @@ class Jobs extends Component {
     } else {
       this.setState({jobAPIStatus: apiStatusConstants.failure})
     }
-  }
-
-  reset = () => {
-    this.setState(
-      {
-        activeEmployements: [],
-        activeSalaryRange: '',
-        searchInput: '',
-        jobAPIStatus: apiStatusConstants.initial,
-      },
-      this.getJobsApiCall(),
-    )
   }
 
   onCheck = event => {
@@ -210,22 +197,26 @@ class Jobs extends Component {
   )
 
   renderCases = () => {
-    const {jobAPIStatus, jobsList, apiProfileStatus} = this.state
+    const {jobAPIStatus, jobsList} = this.state
     switch (jobAPIStatus) {
       case apiStatusConstants.success:
-        if (
-          jobsList.length !== 0 &&
-          apiProfileStatus === apiProfileStatusConstants.success
-        ) {
-          return this.renderJobsSuccess()
+        // if (
+        //   jobsList.length !== 0 &&
+        //   apiProfileStatus === apiStatusConstants.success &&
+        //   apiProfileStatus === apiStatusConstants.failure
+        // ) {
+
+        // }
+        // if (
+        //   jobsList.length !== 0 &&
+        //   apiProfileStatus === apiStatusConstants.inProgress
+        // ) {
+        //   return this.renderLoader()
+        // }
+        if (jobsList.length === 0) {
+          return this.noJobsFoundView()
         }
-        if (
-          jobsList.length !== 0 &&
-          apiProfileStatus !== apiProfileStatusConstants.success
-        ) {
-          return this.renderLoader()
-        }
-        return this.noJobsFoundView()
+        return this.renderJobsSuccess()
       case apiStatusConstants.failure:
         return this.renderJobsFailureView()
       case apiStatusConstants.inProgress:
@@ -238,15 +229,15 @@ class Jobs extends Component {
   renderProfileCases = () => {
     const {apiProfileStatus, userProfile} = this.state
     switch (apiProfileStatus) {
-      case apiProfileStatusConstants.failure:
+      case apiStatusConstants.failure:
         return this.renderFailureProfile()
-      case apiProfileStatusConstants.inProgress:
+      case apiStatusConstants.inProgress:
         return this.renderLoader()
-      case apiProfileStatusConstants.success:
-        if (userProfile.length !== 0) {
-          return this.renderProfileSuccess()
+      case apiStatusConstants.success:
+        if (userProfile.length === 0) {
+          return this.renderFailureProfile()
         }
-        return this.renderFailureProfile()
+        return this.renderProfileSuccess()
       default:
         return null
     }
@@ -277,13 +268,6 @@ class Jobs extends Component {
         <p className="oops-head opps-para">
           We could not find any jobs. Try other filters
         </p>
-        <button
-          type="button"
-          className="login-btn"
-          onClick={this.getJobsApiCall}
-        >
-          Retry
-        </button>
       </div>
     )
   }
@@ -299,7 +283,7 @@ class Jobs extends Component {
       <p className="oops-head opps-para">
         We cannot seem to find the page you are looking for
       </p>
-      <button type="button" className="login-btn" onClick={this.reset}>
+      <button type="button" className="login-btn" onClick={this.getJobsApiCall}>
         Retry
       </button>
     </div>
@@ -308,11 +292,13 @@ class Jobs extends Component {
   renderJobsSuccess = () => {
     const {jobsList} = this.state
     return (
-      <ul className="jobs-list-cont">
-        {jobsList.map(job => (
-          <JobItem key={job.id} jobCard={job} />
-        ))}
-      </ul>
+      <div>
+        <ul className="jobs-list-cont">
+          {jobsList.map(job => (
+            <JobItem key={job.id} jobCard={job} />
+          ))}
+        </ul>
+      </div>
     )
   }
 
@@ -321,7 +307,7 @@ class Jobs extends Component {
     return (
       <>
         {isLoading ? (
-          this.renderLoader
+          this.renderLoader()
         ) : (
           <div className="jobs-cont">
             <Header />
