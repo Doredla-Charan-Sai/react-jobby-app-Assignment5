@@ -3,9 +3,6 @@ import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
 import {BsSearch} from 'react-icons/bs'
-// import {BsStarFill} from 'react-icons/bs'
-// import {MdOutlineWork, MdLocationPin} from 'react-icons/md'
-// import {Link} from 'react-router-dom'
 import JobItem from '../JobItem'
 import Header from '../Header'
 import './index.css'
@@ -59,6 +56,7 @@ class Jobs extends Component {
   state = {
     userProfile: {},
     activeEmployements: [],
+    apiProfileStatus: apiStatusConstants.initial,
     activeSalaryRange: '',
     searchInput: '',
     jobAPIStatus: apiStatusConstants.initial,

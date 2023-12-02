@@ -1,10 +1,10 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
-import {BsStarFill} from 'react-icons/bs'
+import {BsStarFill, BsFillBriefcaseFill} from 'react-icons/bs'
 import {FiExternalLink} from 'react-icons/fi'
 import Loader from 'react-loader-spinner'
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
-import {MdOutlineWork, MdLocationPin} from 'react-icons/md'
+import {MdLocationOn} from 'react-icons/md'
 import Header from '../Header'
 import SimilarJob from '../SimilarJob'
 import './index.css'
@@ -96,6 +96,8 @@ class JobItemDetails extends Component {
     }
   }
 
+  reset = () => this.getJobItemApiCall()
+
   renderJobsFailureView = () => (
     <div className="jobs-detail-cont">
       <img
@@ -105,7 +107,7 @@ class JobItemDetails extends Component {
       />
       <h1 className="oops-head">Oops! Something Went Wrong</h1>
       <p className="oops-head opps-para">
-        We cannot seem for the page you are looking for
+        We cannot seem to find the page you are looking for
       </p>
       <button type="button" className="login-btn" onClick={this.reset}>
         Retry
@@ -149,13 +151,16 @@ class JobItemDetails extends Component {
           <div className="loca-pack-cont">
             <div className="logo-name-rating-cont">
               <div className="logo-name-rating-cont">
-                <MdLocationPin className="rate" style={{marginRight: '5px'}} />
+                <BsFillBriefcaseFill
+                  className="rate"
+                  style={{marginRight: '5px'}}
+                />
                 <p className="rate" style={{marginRight: '10px'}}>
                   {location}
                 </p>
               </div>
               <div className="logo-name-rating-cont">
-                <MdOutlineWork className="rate" style={{marginRight: '5px'}} />
+                <MdLocationOn className="rate" style={{marginRight: '5px'}} />
                 <p className="rate">{employmentType}</p>
               </div>
             </div>
@@ -176,7 +181,7 @@ class JobItemDetails extends Component {
                 <img
                   className="company-logo"
                   src={eachSkill.imageUrl}
-                  alt="skill icon"
+                  alt={eachSkill.name}
                 />
                 <p className="rate">{eachSkill.name}</p>
               </li>

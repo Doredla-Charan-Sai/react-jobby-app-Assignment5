@@ -1,5 +1,5 @@
-import {BsStarFill} from 'react-icons/bs'
-import {MdOutlineWork, MdLocationPin} from 'react-icons/md'
+import {BsStarFill, BsFillBriefcaseFill} from 'react-icons/bs'
+import {MdLocationOn} from 'react-icons/md'
 import './index.css'
 
 const SimilarJob = props => {
@@ -33,13 +33,16 @@ const SimilarJob = props => {
       <div className="loca-pack-cont">
         <div className="logo-name-rating-cont">
           <div className="logo-name-rating-cont">
-            <MdLocationPin className="rate" style={{marginRight: '5px'}} />
+            <BsFillBriefcaseFill
+              className="rate"
+              style={{marginRight: '5px'}}
+            />
             <p className="rate" style={{marginRight: '10px'}}>
               {location}
             </p>
           </div>
           <div className="logo-name-rating-cont">
-            <MdOutlineWork className="rate" style={{marginRight: '5px'}} />
+            <MdLocationOn className="rate" style={{marginRight: '5px'}} />
             <p className="rate">{employmentType}</p>
           </div>
         </div>
